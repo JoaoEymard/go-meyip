@@ -1,26 +1,39 @@
 # Contrato webservice juno
 
-### [POST] /remessa/:id
+### 1. [POST] /acao/enviar-remessa
 
-#### Request
+Criar uma ação de worker (trabalhador) para o envio de boletos de uma remessa para a juno.
 
-```
-HEADERS {
-  "dominio": String,
-  "aplicacao": String
-}
-```
-
-#### Response
+#### - **_Request_**
 
 ```
-200 {
-  "message": String
+HEADERS = {
+  "x-domain": String,
+  "x-app-key": String,
+  "x-aplication": String,
+  "x-version": String, // 1.0.0
 }
 ```
 
 ```
-404, 500 {
+BODY = {
+  "id_remessa": Integer,
+  "_mid": String,
+  "_v": String,
+}
+```
+
+#### - **_Response_**:
+
+```
+STATUS = 200 => {
+  "aid": String,
+  "_mid": String,
+}
+```
+
+```
+STATUS = 404, 500 => {
   "error": Object
   "message": String
 }
