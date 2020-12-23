@@ -1,12 +1,26 @@
-FROM node:15.0.1-alpine3.10
-
-# application
-RUN mkdir -p /home/node/app
-ADD . /home/node/app
-WORKDIR /home/node/app
-
-# setup project
-RUN npm install --only=prod --quiet
-
-# command
-CMD [ "npm", "start" ]
+FROM golang:1.15
+# ----------
+# TimeZone
+# ----------
+ENV TZ=America/Fortaleza
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# ----------
+# Env variables
+# ----------
+# ENV GOPATH /app
+# ENV DATADIR /dat
+# ----------
+# Work dir
+# ----------
+RUN mkdir -p /app
+ADD . /app
+WORKDIR /app
+# ----------
+# Build App
+# ----------
+RUN go get github.com/gorilla/mux
+RUN go build -o audit .
+# ----------
+# Run App
+# ----------
+CMD ["./audit"]

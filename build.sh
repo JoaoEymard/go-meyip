@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # variables
-NAME="ws-juno"
+NAME="go-myip"
 IMAGE=$NAME
 VERSION="$(cat VERSION)"
 
@@ -12,5 +12,5 @@ docker stop $NAME; docker rm $NAME
 docker build -t $IMAGE:$VERSION .
 
 # run 
-docker run -d -p 3020:3000 \
+docker run -d -p 3020:5000 \
   --name $NAME $IMAGE:$VERSION
